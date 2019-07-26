@@ -1,5 +1,4 @@
 require "csv"
-require "charlock_holmes"
 
 module RailsAdminImport
   module Formats
@@ -54,11 +53,14 @@ module RailsAdminImport
       end
 
       def detect_encoding
-        charset = CharlockHolmes::EncodingDetector.detect File.read(filename)
-        if charset[:confidence] > 0.6
-          from_encoding = charset[:encoding]
-          from_encoding = "UTF-8" if from_encoding == "ascii"
-        end
+        # Su: Remove CharlockHolmes since it require to another software http://site.icu-project.org/home
+        # which is not available on server 
+        # charset = CharlockHolmes::EncodingDetector.detect File.read(filename)
+        # if charset[:confidence] > 0.6
+        #   from_encoding = charset[:encoding]
+        #   from_encoding = "UTF-8" if from_encoding == "ascii"
+        # end
+        from_encoding = "UTF-8"
         from_encoding
       end
 
